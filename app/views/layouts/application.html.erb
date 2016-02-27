@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Workspace</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
+<body>
+  
+  <nav class = "navbar navbar-default">
+    <div class = "container">
+      <div class = "navbar-header">
+        <%= link_to "checklist", root_path, class: "navbar-brand" %>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><%= link_to "signup", new_user_registration_path %></li>
+          <% if current_user.present? %>
+          <li><%=link_to "signout" , destroy_user_session_path, method: :delete %></li>
+          <% else%>
+          <li><%= link_to "kennyloggins", new_user_session_path %></li>
+          <%end%>
+        </ul>
+        <% if user_signed_in? %>
+        <%=link_to "new goal", new_goal_path, class: "navbar-text navbar-link 
+        navbar-right" %>
+        <%end%>
+      </div>
+    
+  </nav>
+  
+  
+  <p class ="notice"><%= notice %></p>
+  <p class ="alert"><%= alert %></p>
+
+<%= yield %>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!-- Checks to see if a user is signed in, if one is, it will list its checklist. -->
+<!-- If not, it will render the landing page that asks the user to sign up or login. -->
+<% if user_signed_in? %>
+	<div class="col-md-6 col-md-offset-3">
+		<% @goals.each do |goal| %>
+			<div class="index-wrapper">
+				<% if goal.completed? %>
+					<div class="row item">
+						<div class="col-md-8">
+							<h2 style="opacity: 0.5;" class="goal-title"><strike><%= link_to goal.title, goal %></strike></h2>
+							<p style="opacity: 0.5;" class="goal-sub-title goal-desc"><%= goal.description %></p>
+							<p style="opacity: 0.5;" class="time-created-at goal-sub-title">Completed <%= time_ago_in_words(goal.completed_at) %> ago</p>
+						</div>
+						<div class="col-md-2">
+							<p><%= link_to complete_goal_path(goal), method: :patch do %></p>
+								<i class="fa fa-check fa-lg"></i>
+							<% end %>
+						</div>
+						<div class="col-md-2">
+							<p><%= link_to goal, method: :delete, data: { confirm: "Are you sure?" } do %></p>
+								<i class="fa fa-trash fa-lg"></i>
+							<% end %>
+						</div>	
+					</div>
+				<% else %>	
+					<div class="row goal">
+						<div class="col-md-8">
+							<h2 class="goal-title"><%= goal.title %></h2>
+							<p class="item-sub-title goal-desc"><%= goal.description %></p>
+							<p style="opacity: 0.5;" class="time-created-at goal-sub-title">Created <%= time_ago_in_words(goal.created_at) %> ago</p>
+						</div>
+						<div class="col-md-2">
+							<p><%= link_to complete_goal_path(goal), method: :patch do %></p>
+								<i class="fa fa-check fa-lg"></i>
+							<% end %>
+						</div>
+						<div class="col-md-2">
+							<p><%= link_to goal, method: :delete, data: { confirm: "Are you sure?" } do %></p>
+								<i class="fa fa-trash fa-lg"></i>
+							<% end %>
+						</div>
+					</div>
+				<% end %>
+			</div>
+
+		<% end %>	
+	</div>
+<% else %>
+	<%= render 'static_landing_page' %>
+<% end %>	
+
